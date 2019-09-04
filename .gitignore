@@ -1,0 +1,3 @@
+build/*
+openFrameworks_old/*
+CMakeLists.txt.user
