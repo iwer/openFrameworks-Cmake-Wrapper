@@ -18,6 +18,7 @@ find_package(FreeImage REQUIRED)
 # find_package(stdc++fs REQUIRED) for c++17 std::filesystem
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 find_package(PugiXML REQUIRED)
+find_package(assimp)
 
 include(FindPkgConfig)
 pkg_search_module(Cairo REQUIRED cairo)
@@ -43,6 +44,7 @@ pkg_search_module(GTK REQUIRED gtk+-3.0)
 pkg_search_module(MPG123 REQUIRED libmpg123)
 pkg_search_module(GTK REQUIRED gstreamer-gl-1.0)
 pkg_search_module(URI REQUIRED liburiparser)
+pkg_search_module(USB libusb-1.0)
 
 #######################
 # Create target and set properties
@@ -122,9 +124,16 @@ add_library(openframeworks
 )
 
 include(${openFrameworks_DIR}/addons/ofxGui/ofxGui.cmake)
-include(${openFrameworks_DIR}/addons/ofxAssimpModelLoader/ofxAssimpModelLoaderSettings.cmake)
 include(${openFrameworks_DIR}/addons/ofxXmlSettings/ofxXmlSettings.cmake)
-include(${openFrameworks_DIR}/addons/ofxThreadedImageLoader/ofxThreadedImageLoaderSettings.cmake)
+include(${openFrameworks_DIR}/addons/ofxThreadedImageLoader/ofxThreadedImageLoader.cmake)
+include(${openFrameworks_DIR}/addons/ofxAutoReloadedShader/ofxAutoReloadedShader.cmake)
+include(${openFrameworks_DIR}/addons/ofxOsc/ofxOsc.cmake)
+if(${assimp_FOUND})
+    include(${openFrameworks_DIR}/addons/ofxAssimpModelLoader/ofxAssimpModelLoader.cmake)
+endif(${assimp_FOUND})
+if(${USB_FOUND})
+    include(${openFrameworks_DIR}/addons/ofxKinect/ofxKinect.cmake)
+endif(${USB_FOUND})
 
 add_library(ofaddons ${ADDONS_SOURCES})
 

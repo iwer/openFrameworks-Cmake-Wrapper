@@ -20,32 +20,33 @@ message(STATUS "-------------------------------- Configuring OF Addon '${ADDON_N
 # this populate ADDON_SRC with the list of source files in src/
 # this should work in most cases
 
-if(WIN32)
-    SET(PLATFORM "win32")
-else()
-    SET(PLATFORM "posix")
-endif(WIN32)
-
-file( GLOB_RECURSE ADDON_SRC ${ADDON_ROOT}/src/*.cpp)
-SET(ADDON_SRC 
-	${ADDON_SRC}
-	"${ADDON_ROOT}/libs/oscpack/src/ip/IpEndpointName.cpp"
-	"${ADDON_ROOT}/libs/oscpack/src/ip/${PLATFORM}/NetworkingUtils.cpp"
-	"${ADDON_ROOT}/libs/oscpack/src/ip/${PLATFORM}/UdpSocket.cpp"
-	"${ADDON_ROOT}/libs/oscpack/src/osc/OscOutboundPacketStream.cpp"
-	"${ADDON_ROOT}/libs/oscpack/src/osc/OscPrintReceivedElements.cpp"
-	"${ADDON_ROOT}/libs/oscpack/src/osc/OscReceivedElements.cpp"
-	)
+set(ADDON_SRC 
+    ${ADDON_ROOT}/src/MSAOpenCL.cpp
+    ${ADDON_ROOT}/src/MSAOpenCLBuffer.cpp
+    ${ADDON_ROOT}/src/MSAOpenCLImage.cpp
+    ${ADDON_ROOT}/src/MSAOpenCLKernel.cpp
+    ${ADDON_ROOT}/src/MSAOpenCLMemoryObject.cpp
+    ${ADDON_ROOT}/src/MSAOpenCLProgram.cpp
+)
+set(ADDON_HDR
+    MSAOpenCL.h
+    MSAOpenCLBuffer.h
+    MSAOpenCLBufferManagedT.h
+    MSAOpenCLImage.h
+    MSAOpenCLImagePingPong.h
+    MSAOpenCLKernel.h
+    MSAOpenCLMemoryObject.h
+    MSAOpenCLProgram.h
+    MSAOpenCLTypes.h
+)
 #########################################################################
 
 
 set(ADDONS_SOURCES ${ADDONS_SOURCES} ${ADDON_SRC})
 set(ADDONS_INCLUDE_DIRS ${ADDONS_INCLUDE_DIRS} 
-	"${ADDON_ROOT}/src/" 
-	"${ADDON_ROOT}/libs/oscpack/src/"
-	"${ADDON_ROOT}/libs/oscpack/src/osc/"
-	"${ADDON_ROOT}/libs/oscpack/src/ip/")
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>)
+set(ADDONS_INCLUDES ${ADDONS_INCLUDES} ${ADDON_HDR})
 
-
+set(ADDONS_LIBRARIES ${ADDONS_LIBRARIES} OpenCL)
 
 
