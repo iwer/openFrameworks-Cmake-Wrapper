@@ -21,23 +21,25 @@ message(STATUS "-------------------------------- Configuring OF Addon '${ADDON_N
 # this should work in most cases
 
 set(ADDON_SRC 
-    ${ADDON_ROOT}/src/MSAOpenCL.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLBuffer.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLImage.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLKernel.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLMemoryObject.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLProgram.cpp
+    ${ADDON_ROOT}/src/ofxCvColorImage.cpp
+    ${ADDON_ROOT}/src/ofxCvContourFinder.cpp
+    ${ADDON_ROOT}/src/ofxCvFloatImage.cpp
+    ${ADDON_ROOT}/src/ofxCvGrayscaleImage.cpp
+    ${ADDON_ROOT}/src/ofxCvHaarFinder.cpp
+    ${ADDON_ROOT}/src/ofxCvImage.cpp
+    ${ADDON_ROOT}/src/ofxCvShortImage.cpp
 )
+
 set(ADDON_HDR
-    MSAOpenCL.h
-    MSAOpenCLBuffer.h
-    MSAOpenCLBufferManagedT.h
-    MSAOpenCLImage.h
-    MSAOpenCLImagePingPong.h
-    MSAOpenCLKernel.h
-    MSAOpenCLMemoryObject.h
-    MSAOpenCLProgram.h
-    MSAOpenCLTypes.h
+    ofxCvBlob.h
+    ofxCvColorImage.h
+    ofxCvConstants.h
+    ofxCvContourFinder.h
+    ofxCvFloatImage.h
+    ofxCvGrayscaleImage.h
+    ofxCvHaarFinder.h
+    ofxCvImage.h
+    ofxCvShortImage.h
 )
 #########################################################################
 
@@ -45,9 +47,16 @@ set(ADDON_HDR
 set(ADDONS_SOURCES ${ADDONS_SOURCES} ${ADDON_SRC})
 set(ADDONS_INCLUDE_DIRS ${ADDONS_INCLUDE_DIRS} 
     $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
+    /usr/include/opencv 
+    /usr/include/harfbuzz 
+    /usr/include/freetype2
+    /usr/include/libpng16
+    /usr/include/glib-2.0 
+    /usr/lib/x86_64-linux-gnu/glib-2.0/include
 )
 set(ADDONS_INCLUDES ${ADDONS_INCLUDES} ${ADDON_HDR})
+set(ADDONS_LIBRARIES ${ADDONS_LIBRARIES} ${OPENCV_LIBRARIES} ${HARFBUZZ_LIBRARIES} ${FreeType2_LIBRARIES})
 
-set(ADDONS_LIBRARIES ${ADDONS_LIBRARIES} OpenCL)
+
 
 

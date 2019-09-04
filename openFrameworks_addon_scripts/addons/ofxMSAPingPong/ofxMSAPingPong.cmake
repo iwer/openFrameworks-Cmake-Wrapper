@@ -21,33 +21,18 @@ message(STATUS "-------------------------------- Configuring OF Addon '${ADDON_N
 # this should work in most cases
 
 set(ADDON_SRC 
-    ${ADDON_ROOT}/src/MSAOpenCL.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLBuffer.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLImage.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLKernel.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLMemoryObject.cpp
-    ${ADDON_ROOT}/src/MSAOpenCLProgram.cpp
 )
 set(ADDON_HDR
-    MSAOpenCL.h
-    MSAOpenCLBuffer.h
-    MSAOpenCLBufferManagedT.h
-    MSAOpenCLImage.h
-    MSAOpenCLImagePingPong.h
-    MSAOpenCLKernel.h
-    MSAOpenCLMemoryObject.h
-    MSAOpenCLProgram.h
-    MSAOpenCLTypes.h
+    MSAPingPong.h
 )
 #########################################################################
 
 
 set(ADDONS_SOURCES ${ADDONS_SOURCES} ${ADDON_SRC})
 set(ADDONS_INCLUDE_DIRS ${ADDONS_INCLUDE_DIRS} 
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
-)
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>)
 set(ADDONS_INCLUDES ${ADDONS_INCLUDES} ${ADDON_HDR})
 
-set(ADDONS_LIBRARIES ${ADDONS_LIBRARIES} OpenCL)
+
 
 
