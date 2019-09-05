@@ -142,7 +142,8 @@ if(${OpenCL_FOUND})
     include(${openFrameworks_DIR}/addons/ofxMSAOpenCL/ofxMSAOpenCL.cmake)
 endif(${OpenCL_FOUND})
 if(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
-    include(${openFrameworks_DIR}/addons/ofxOpenCv/ofxOpenCV.cmake)
+    include(${openFrameworks_DIR}/addons/ofxOpenCv/ofxOpenCv.cmake)
+    include(${openFrameworks_DIR}/addons/ofxCv/ofxCv.cmake)
 endif(${OPENCV_FOUND})
 
 add_library(ofaddons ${ADDONS_SOURCES})
@@ -227,9 +228,9 @@ target_link_libraries(openframeworks
 	${Sndfile_LIBRARIES}
 	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/lib/linux64/libkiss.a>
 	${PUGIXML_LIBRARIES}
-        Boost::filesystem
-        ${CMAKE_DL_LIBS} 
-        ${CMAKE_THREAD_LIBS_INIT}
+    Boost::filesystem
+    ${CMAKE_DL_LIBS} 
+    ${CMAKE_THREAD_LIBS_INIT}
     PRIVATE
 )
 #######################
