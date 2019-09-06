@@ -190,9 +190,10 @@ target_link_libraries(openframeworks
 	${Sndfile_LIBRARIES}
 	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/lib/linux64/libkiss.a>
 	${PUGIXML_LIBRARIES}
-    Boost::filesystem
-    ${CMAKE_DL_LIBS} 
-    ${CMAKE_THREAD_LIBS_INIT}
+	${UDEV_LIBRARIES}
+	Boost::filesystem
+        ${CMAKE_DL_LIBS} 
+        ${CMAKE_THREAD_LIBS_INIT}
     PRIVATE
 )
 
