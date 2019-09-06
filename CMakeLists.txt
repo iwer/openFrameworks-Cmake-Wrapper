@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(openFrameworks VERSION 0.10.1 LANGUAGES C CXX)
 
-# Make sure custom modules are found
-set(CUSTOM_MODULE_PATH "/home/elresidente/Develop/Repository/CMakeHelpers")
-list(APPEND CMAKE_MODULE_PATH "${CUSTOM_MODULE_PATH}")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-set(openFrameworks_DIR "/home/elresidente/Develop/Repository/openFrameworks-dev/openFrameworks")
+set(openFrameworks_DIR "${CMAKE_CURRENT_SOURCE_DIR}/openFrameworks")
 
 #######################
 # Declare dependencies
@@ -305,7 +303,8 @@ configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/openFrameworksConf
 
 # install config, configversion and custom find module
 install(FILES
-#    ${CMAKE_CURRENT_LIST_DIR}/cmake/FindopenFrameworks.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/cmake/FindFreeImage.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/cmake/FindPugiXML.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/openFrameworksConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/openFrameworksConfigVersion.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
@@ -322,4 +321,4 @@ export(
 )
 
 # register package
-export(PACKAGE openFrameworks)
+# export(PACKAGE openFrameworks)

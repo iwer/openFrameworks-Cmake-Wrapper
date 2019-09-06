@@ -1,6 +1,6 @@
 get_filename_component(openFrameworks_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 include(CMakeFindDependencyMacro)
-
+list(APPEND CMAKE_MODULE_PATH ${openFrameworks_CMAKE_DIR} "${openFrameworks_CMAKE_DIR}../cmake")
 list(APPEND CMAKE_MODULE_PATH ${openFrameworks_CMAKE_DIR})
 
 # NOTE Had to use find_package because find_dependency does not support COMPONENTS or MODULE until 3.8.0
@@ -47,12 +47,9 @@ pkg_search_module(USB libusb-1.0)
 pkg_search_module(OPENCV opencv)
 pkg_search_module(HARFBUZZ harfbuzz)
 
-list(REMOVE_AT CMAKE_MODULE_PATH -1)
+#list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 if(NOT TARGET OF::openFrameworks)
-    include("${openFrameworks_CMAKE_DIR}/openFrameworksTargets.cmake")
-endif()
-if(NOT TARGET OF::ofAddons)
     include("${openFrameworks_CMAKE_DIR}/openFrameworksTargets.cmake")
 endif()
 set(openFrameworks_LIBRARIES OF::openFrameworks OF::ofAddons)
