@@ -18,7 +18,7 @@ This is tested and used on Ubuntu 19.04. For other operating system several thin
 ## Installation
 
 * Clone this repo
-* `cd openFrameworks-dev` 
+* `cd openFrameworks-Cmake-Wrapper` 
 * `git submodule update --init --recursive`
 * `./openFrameworks/scripts/linux/ubuntu/install_dependencies.sh`
 * `./openFrameworks/scripts/linux/ubuntu/install_codecs.sh`
