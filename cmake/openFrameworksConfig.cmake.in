@@ -16,6 +16,8 @@ find_package(FreeImage REQUIRED)
 # find_package(stdc++fs REQUIRED) for c++17 std::filesystem
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 find_package(PugiXML REQUIRED)
+find_package(assimp)
+find_package(OpenCL)
 
 include(FindPkgConfig)
 pkg_search_module(Cairo REQUIRED cairo)
@@ -41,6 +43,9 @@ pkg_search_module(GTK REQUIRED gtk+-3.0)
 pkg_search_module(MPG123 REQUIRED libmpg123)
 pkg_search_module(GTK REQUIRED gstreamer-gl-1.0)
 pkg_search_module(URI REQUIRED liburiparser)
+pkg_search_module(USB libusb-1.0)
+pkg_search_module(OPENCV opencv)
+pkg_search_module(HARFBUZZ harfbuzz)
 
 list(REMOVE_AT CMAKE_MODULE_PATH -1)
 

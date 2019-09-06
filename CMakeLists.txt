@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(openFrameworks VERSION 0.10.0 LANGUAGES C CXX)
+project(openFrameworks VERSION 0.10.1 LANGUAGES C CXX)
 
 # Make sure custom modules are found
 set(CUSTOM_MODULE_PATH "/home/elresidente/Develop/Repository/CMakeHelpers")
