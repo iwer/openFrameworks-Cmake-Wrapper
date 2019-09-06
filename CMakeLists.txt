@@ -126,34 +126,9 @@ add_library(openframeworks
         ${openFrameworks_DIR}/libs/openFrameworks/video/ofGstVideoPlayer.cpp
 )
 
-include(${openFrameworks_DIR}/addons/ofxGui/ofxGui.cmake)
-include(${openFrameworks_DIR}/addons/ofxXmlSettings/ofxXmlSettings.cmake)
-include(${openFrameworks_DIR}/addons/ofxThreadedImageLoader/ofxThreadedImageLoader.cmake)
-include(${openFrameworks_DIR}/addons/ofxAutoReloadedShader/ofxAutoReloadedShader.cmake)
-include(${openFrameworks_DIR}/addons/ofxOsc/ofxOsc.cmake)
-include(${openFrameworks_DIR}/addons/ofxMSAPingPong/ofxMSAPingPong.cmake)
-if(${assimp_FOUND})
-    include(${openFrameworks_DIR}/addons/ofxAssimpModelLoader/ofxAssimpModelLoader.cmake)
-endif(${assimp_FOUND})
-if(${USB_FOUND})
-    include(${openFrameworks_DIR}/addons/ofxKinect/ofxKinect.cmake)
-endif(${USB_FOUND})
-if(${OpenCL_FOUND})
-    include(${openFrameworks_DIR}/addons/ofxMSAOpenCL/ofxMSAOpenCL.cmake)
-endif(${OpenCL_FOUND})
-if(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
-    include(${openFrameworks_DIR}/addons/ofxOpenCv/ofxOpenCv.cmake)
-    include(${openFrameworks_DIR}/addons/ofxCv/ofxCv.cmake)
-endif(${OPENCV_FOUND})
-
-add_library(ofaddons ${ADDONS_SOURCES})
-
-
-
 #######################
 # add alias so that lib can be used inside build tree, e.g. when testing
 add_library(OF::openframeworks ALIAS openframeworks)
-add_library(OF::addons ALIAS ofaddons)
 
 #######################
 # set target properties
@@ -186,11 +161,6 @@ target_include_directories(openframeworks
         ${RtAudio_INCLUDE_DIRS}
 )
 
-target_include_directories(ofaddons 
-    PUBLIC
-        ${ADDONS_INCLUDE_DIRS}
-)
-
 #######################
 
 target_compile_features(openframeworks PRIVATE cxx_auto_type)
@@ -200,12 +170,6 @@ target_compile_features(openframeworks PRIVATE cxx_auto_type)
 target_compile_definitions(openframeworks PUBLIC GLM_ENABLE_EXPERIMENTAL)
 
 #######################
-
-target_link_libraries(ofaddons
-    PUBLIC
-        ${ADDONS_LIBRARIES}
-        openframeworks
-)
 
 target_link_libraries(openframeworks
     PUBLIC
@@ -233,10 +197,29 @@ target_link_libraries(openframeworks
     ${CMAKE_THREAD_LIBS_INIT}
     PRIVATE
 )
+
+
+add_subdirectory(${openFrameworks_DIR}/addons/ofxGui)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxXmlSettings)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxThreadedImageLoader)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxAutoReloadedShader)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxOsc)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxMSAPingPong)
+if(${assimp_FOUND})
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxAssimpModelLoader)
+endif(${assimp_FOUND})
+if(${USB_FOUND})
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxKinect)
+endif(${USB_FOUND})
+if(${OpenCL_FOUND})
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxMSAOpenCL)
+endif(${OpenCL_FOUND})
+if(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxOpenCv)
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxCv)
+endif(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
+
 #######################
-
-
-
 # Installation instructions
 include(GNUInstallDirs)
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/openFrameworks)
@@ -246,7 +229,7 @@ install(TARGETS openframeworks
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-install(TARGETS ofaddons
+install(TARGETS ${OFADDON_TARGETS}
     EXPORT ofaddons-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -254,7 +237,6 @@ install(TARGETS ofaddons
 
 # this is required so that the exported target has the name openFrameworks and not openframeworks
 set_target_properties(openframeworks PROPERTIES EXPORT_NAME openFrameworks)
-set_target_properties(ofaddons PROPERTIES EXPORT_NAME ofAddons)
 
 install(DIRECTORY
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/>
@@ -329,22 +311,15 @@ install(FILES
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
-# exporting from build tree
-#configure_file(${CMAKE_CURRENT_LIST_DIR}/cmake/FindopenFrameworks.cmake
-#    ${CMAKE_CURRENT_BINARY_DIR}/FindopenFrameworks.cmake
-#    COPYONLY
-#)
-
 export(
     TARGETS 
         openframeworks
-        ofaddons 
+        ${OFADDON_TARGETS} 
     FILE 
         ${CMAKE_CURRENT_BINARY_DIR}/openFrameworksTargets.cmake 
     NAMESPACE 
         OF::
 )
-#export(EXPORT  FILE ${CMAKE_CURRENT_BINARY_DIR}/openFrameworksTargets.cmake NAMESPACE OF::)
 
 # register package
 export(PACKAGE openFrameworks)

@@ -24,7 +24,7 @@ do
         continue
     fi
 
-    SOURCE="${BASE}/openFrameworks_addon_scripts/addons/${ADDONNAME}/${ADDONNAME}.cmake"
+    SOURCE="${BASE}/openFrameworks_addon_scripts/addons/${ADDONNAME}/CMakeLists.txt"
     TARGET="${BASE}/openFrameworks/addons/${ADDONNAME}/"
 
     if [ ! -d "${TARGET}" ]; then
@@ -33,13 +33,18 @@ do
     fi
 
     if [ -L "${TARGET}/${ADDONNAME}.cmake" ]; then
-        echo " * ${TARGET}/${ADDONNAME}.cmake already is a symlink"
+        echo " * removing old .cmake symlink"
+	rm "${TARGET}/${ADDONNAME}.cmake"
+    fi
+
+    if [ -L "${TARGET}/CMakeLists.txt" ]; then
+        echo " * ${TARGET}/CMakeLists.txt already is a symlink"
         continue
     fi    
 
-    if [ -f "${TARGET}/${ADDONNAME}.cmake" ]; then
+    if [ -f "${TARGET}/CMakeLists.txt" ]; then
         echo " * Removing file at target"
-        rm "${TARGET}/${ADDONNAME}.cmake"
+        rm "${TARGET}/CMakeLists.txt"
     fi
  
     echo " * Linking cmake script for ${ADDONNAME}"
