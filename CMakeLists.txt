@@ -151,9 +151,9 @@ target_include_directories(openframeworks
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/json/include>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/include>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/fmodex/include>
-        ${GST_INCLUDE_DIRS} 
-        ${GSTAPP_INCLUDE_DIRS} 
-        ${GSTVID_INCLUDE_DIRS} 
+        ${GST_INCLUDE_DIRS}
+        ${GSTAPP_INCLUDE_DIRS}
+        ${GSTVID_INCLUDE_DIRS}
         ${GSTBASE_INCLUDE_DIRS}
         ${Cairo_INCLUDE_DIRS}
         ${RtAudio_INCLUDE_DIRS}
@@ -181,8 +181,8 @@ target_link_libraries(openframeworks
 	${FontConfig_LIBRARIES}
 	${Curl_LIBRARIES}
 	${GST_LIBRARIES}
-	${GSTAPP_LIBRARIES} 
-	${GSTVID_LIBRARIES} 
+	${GSTAPP_LIBRARIES}
+	${GSTVID_LIBRARIES}
 	${GSTBASE_LIBRARIES}
 	${GLFW3_LIBRARIES}
 	${Cairo_LIBRARIES}
@@ -192,18 +192,20 @@ target_link_libraries(openframeworks
 	${PUGIXML_LIBRARIES}
 	${UDEV_LIBRARIES}
 	Boost::filesystem
-        ${CMAKE_DL_LIBS} 
-        ${CMAKE_THREAD_LIBS_INIT}
-    PRIVATE
+  ${CMAKE_DL_LIBS}
+  ${CMAKE_THREAD_LIBS_INIT}
 )
 
+## include addons dependent on found system libs
 
 add_subdirectory(${openFrameworks_DIR}/addons/ofxGui)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxXmlSettings)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxAnimatable)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxThreadedImageLoader)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxAutoReloadedShader)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxOsc)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxMSAPingPong)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxPostProcessing)
 if(${assimp_FOUND})
     add_subdirectory(${openFrameworks_DIR}/addons/ofxAssimpModelLoader)
 endif(${assimp_FOUND})
@@ -238,7 +240,7 @@ install(TARGETS ${OFADDON_TARGETS}
 set_target_properties(openframeworks PROPERTIES EXPORT_NAME openFrameworks)
 
 install(DIRECTORY
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/>
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h"
     PATTERN "graphics/" EXCLUDE
@@ -257,24 +259,24 @@ install(DIRECTORY
 
 
 install(DIRECTORY
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/graphics/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/3d/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/math/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/gl/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/video/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/types/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/sound/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/app/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/events/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/communication/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/utils/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/tess2/include/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/utf8/include/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/glm/include/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/json/include/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/include/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/fmodex/include/>
-        ${ADDONS_INCLUDE_DIRS}
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/graphics/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/3d/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/math/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/gl/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/video/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/types/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/sound/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/app/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/events/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/communication/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/utils/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/tess2/include/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/utf8/include/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/glm/include/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/json/include/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/include/>
+    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/fmodex/include/>
+    ${ADDONS_INCLUDE_DIRS}
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h" PATTERN "*.inl"
 )
@@ -312,12 +314,12 @@ install(FILES
 )
 
 export(
-    TARGETS 
+    TARGETS
         openframeworks
-        ${OFADDON_TARGETS} 
-    FILE 
-        ${CMAKE_CURRENT_BINARY_DIR}/openFrameworksTargets.cmake 
-    NAMESPACE 
+        ${OFADDON_TARGETS}
+    FILE
+        ${CMAKE_CURRENT_BINARY_DIR}/openFrameworksTargets.cmake
+    NAMESPACE
         OF::
 )
 
