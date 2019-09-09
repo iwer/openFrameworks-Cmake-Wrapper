@@ -16,8 +16,8 @@ BASE=$(pwd)
 git submodule update --init --recursive
 
 # openFrameworks dependencies
-./openFrameworks/scripts/linux/ubuntu/install_dependencies.sh
-./openFrameworks/scripts/linux/ubuntu/install_codecs.sh
+sudo ./openFrameworks/scripts/linux/ubuntu/install_dependencies.sh
+sudo ./openFrameworks/scripts/linux/ubuntu/install_codecs.sh
 ./openFrameworks/scripts/linux/download_libs.sh
 ./openFrameworks/scripts/linux/compileOF.sh
 ./openFrameworks/scripts/linux/compilePG.sh
@@ -44,6 +44,9 @@ if [ ! -d "ofxPostProcessing" ]; then
 fi
 if [ ! -d "ofxAnimatable" ]; then
     git clone https://github.com/armadillu/ofxAnimatable.git
+fi
+if [ ! -d "ofxDeferredShading" ]; then
+    git clone https://github.com/nama-gatsuo/ofxDeferredShading.git
 fi
 
 # Link CMake list scripts for addons
