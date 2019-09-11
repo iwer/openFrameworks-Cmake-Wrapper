@@ -38,7 +38,7 @@ do
     fi
 
     if [ -L "${TARGET}/CMakeLists.txt" ]; then
-        echo " * ${TARGET}/CMakeLists.txt already is a symlink"
+        echo " * ${ADDONNAME} already symlinked"
         continue
     fi    
 

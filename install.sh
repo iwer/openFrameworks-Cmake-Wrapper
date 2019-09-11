@@ -23,31 +23,7 @@ sudo ./openFrameworks/scripts/linux/ubuntu/install_codecs.sh
 ./openFrameworks/scripts/linux/compilePG.sh
 
 # Clone adiitional addon repos
-cd ${BASE}/openFrameworks/addons
-if [ ! -d "ofxCv" ]; then
-    git clone https://github.com/kylemcdonald/ofxCv.git
-fi
-if [ ! -d "ofxPDSP" ]; then
-    git clone https://github.com/npisanti/ofxPDSP.git
-fi
-if [ ! -d "ofxMSAOpenCL" ]; then
-    git clone https://github.com/memo/ofxMSAOpenCL.git
-fi
-if [ ! -d "ofxMSAPingPong" ]; then
-    git clone https://github.com/memo/ofxMSAPingPong.git
-fi
-if [ ! -d "ofxAutoReloadedShader" ]; then
-    git clone https://github.com/andreasmuller/ofxAutoReloadedShader.git
-fi
-if [ ! -d "ofxPostProcessing" ]; then
-    git clone https://github.com/neilmendoza/ofxPostProcessing.git
-fi
-if [ ! -d "ofxAnimatable" ]; then
-    git clone https://github.com/armadillu/ofxAnimatable.git
-fi
-if [ ! -d "ofxDeferredShading" ]; then
-    git clone https://github.com/nama-gatsuo/ofxDeferredShading.git
-fi
+./scripts/clone_addons.sh
 
 # Link CMake list scripts for addons
 cd ${BASE}
@@ -58,4 +34,4 @@ echo "openFrameworks and addons can now be built:"
 echo "   * cd build"
 echo "   * cmake .."
 echo "   * make -j4"
-echo "   * sduo make install"
+echo "   * sudo make install"
