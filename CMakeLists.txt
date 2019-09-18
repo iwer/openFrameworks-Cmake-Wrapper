@@ -46,6 +46,7 @@ pkg_search_module(URI REQUIRED liburiparser)
 pkg_search_module(USB libusb-1.0)
 pkg_search_module(OPENCV opencv)
 pkg_search_module(HARFBUZZ harfbuzz)
+pkg_search_module(OPENVR openvr)
 
 #######################
 # Create target and set properties
@@ -229,7 +230,9 @@ if(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
     add_subdirectory(${openFrameworks_DIR}/addons/ofxOpenCv)
     add_subdirectory(${openFrameworks_DIR}/addons/ofxCv)
 endif(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
-
+if(${OPENVR_FOUND})
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxOpenVR)
+endif(${OPENVR_FOUND})
 #######################
 # Installation instructions
 include(GNUInstallDirs)
