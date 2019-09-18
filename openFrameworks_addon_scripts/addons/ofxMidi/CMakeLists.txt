@@ -33,6 +33,7 @@ target_link_libraries(${ADDON_NAME}
 )
 target_include_directories(${ADDON_NAME}
     PUBLIC
+	$<INSTALL_INTERFACE:include/addons/${ADDON_NAME}>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/rtmidi/>
         # include directories in addon tree must be referenced like above
@@ -43,6 +44,13 @@ install(TARGETS ${ADDON_NAME}
     EXPORT ${ADDON_NAME}-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(DIRECTORY
+	$<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
+	$<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/rtmidi/>
+    	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/addons/${ADDON_NAME}/
+	FILES_MATCHING PATTERN "*.h"
 )
 
 set(OFADDON_TARGETS ${OFADDON_TARGETS} ${ADDON_NAME} PARENT_SCOPE)

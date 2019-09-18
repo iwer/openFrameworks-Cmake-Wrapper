@@ -134,6 +134,17 @@ add_library(OF::openframeworks ALIAS openframeworks)
 target_include_directories(openframeworks
     PUBLIC
         $<INSTALL_INTERFACE:include>
+	$<INSTALL_INTERFACE:include/graphics>
+	$<INSTALL_INTERFACE:include/3d>
+	$<INSTALL_INTERFACE:include/math>
+	$<INSTALL_INTERFACE:include/gl>
+	$<INSTALL_INTERFACE:include/video>
+	$<INSTALL_INTERFACE:include/types>
+	$<INSTALL_INTERFACE:include/sound>
+	$<INSTALL_INTERFACE:include/app>
+	$<INSTALL_INTERFACE:include/events>
+	$<INSTALL_INTERFACE:include/communication>
+	$<INSTALL_INTERFACE:include/utils>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/graphics>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/3d>
@@ -170,6 +181,11 @@ target_compile_definitions(openframeworks PUBLIC GLM_ENABLE_EXPERIMENTAL)
 
 #######################
 
+target_link_directories(openframeworks
+	INTERFACE
+	$<INSTALL_INTERFACE:lib>
+)
+
 target_link_libraries(openframeworks
     PUBLIC
 	${GLUT_LIBRARIES}
@@ -177,6 +193,7 @@ target_link_libraries(openframeworks
 	${X11_LIBRARIES}
 	${FREEIMAGE_LIBRARIES}
 	${URI_LIBRARIES}
+	$<INSTALL_INTERFACE:tess2>
 	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/tess2/lib/linux64/libtess2.a>
 	${FreeType2_LIBRARIES}
 	${FontConfig_LIBRARIES}
@@ -189,6 +206,7 @@ target_link_libraries(openframeworks
 	${Cairo_LIBRARIES}
 	${OpenAL_LIBRARIES}
 	${Sndfile_LIBRARIES}
+	$<INSTALL_INTERFACE:kiss>
 	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/lib/linux64/libkiss.a>
 	${PUGIXML_LIBRARIES}
 	${UDEV_LIBRARIES}
@@ -233,69 +251,60 @@ endif(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
 if(${OPENVR_FOUND})
     add_subdirectory(${openFrameworks_DIR}/addons/ofxOpenVR)
 endif(${OPENVR_FOUND})
+
 #######################
 # Installation instructions
 include(GNUInstallDirs)
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/openFrameworks)
 
-install(TARGETS openframeworks
-    EXPORT openframeworks-targets
+install(TARGETS 
+	openframeworks
+	${OFADDON_TARGETS}
+    EXPORT 
+	openframeworks-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-install(TARGETS ${OFADDON_TARGETS}
-    EXPORT ofaddons-targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
+
+#install(TARGETS ${OFADDON_TARGETS}
+#    EXPORT ofaddons-targets
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#)
 
 # this is required so that the exported target has the name openFrameworks and not openframeworks
 set_target_properties(openframeworks PROPERTIES EXPORT_NAME openFrameworks)
 
+# install openFrameworks headers
 install(DIRECTORY
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/>
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES_MATCHING PATTERN "*.h"
-    PATTERN "graphics/" EXCLUDE
-    PATTERN "3d/" EXCLUDE
-    PATTERN "math/" EXCLUDE
-    PATTERN "gl/" EXCLUDE
-    PATTERN "video/" EXCLUDE
-    PATTERN "types/" EXCLUDE
-    PATTERN "sound/" EXCLUDE
-    PATTERN "app/" EXCLUDE
-    PATTERN "events/" EXCLUDE
-    PATTERN "communiction/" EXCLUDE
-    PATTERN "graphics/" EXCLUDE
-    PATTERN "utils/" EXCLUDE
+    FILES_MATCHING PATTERN "*.h" PATTERN "*.inl"
 )
 
+# install packaged libraries
+install(FILES
+	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/tess2/lib/linux64/libtess2.a>
+	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/lib/linux64/libkiss.a>
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
 
+# install packaged dependency headers
 install(DIRECTORY
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/graphics/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/3d/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/math/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/gl/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/video/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/types/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/sound/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/app/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/events/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/communication/>
-    $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/openFrameworks/utils/>
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/tess2/include/>
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/utf8/include/>
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/glm/include/>
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/json/include/>
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/include/>
     $<BUILD_INTERFACE:${openFrameworks_DIR}/libs/fmodex/include/>
-    ${ADDONS_INCLUDE_DIRS}
+#    ${ADDONS_INCLUDE_DIRS}
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES_MATCHING PATTERN "*.h" PATTERN "*.inl"
+    FILES_MATCHING PATTERN "*.h" PATTERN "*.inl" PATTERN "*.hpp"
 )
 
 # export targets to a script
-install(EXPORT openframeworks-targets
+install(EXPORT 
+	openframeworks-targets
     FILE
         openFrameworksTargets.cmake
     NAMESPACE

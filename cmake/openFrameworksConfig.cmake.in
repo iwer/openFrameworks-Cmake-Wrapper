@@ -46,6 +46,7 @@ pkg_search_module(URI REQUIRED liburiparser)
 pkg_search_module(USB libusb-1.0)
 pkg_search_module(OPENCV opencv)
 pkg_search_module(HARFBUZZ harfbuzz)
+pkg_search_module(OPENVR openvr)
 
 #list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
