@@ -206,13 +206,14 @@ target_link_libraries(openframeworks
 	${Cairo_LIBRARIES}
 	${OpenAL_LIBRARIES}
 	${Sndfile_LIBRARIES}
+	${RtAudio_LIBRARIES}
 	$<INSTALL_INTERFACE:kiss>
 	$<BUILD_INTERFACE:${openFrameworks_DIR}/libs/kiss/lib/linux64/libkiss.a>
 	${PUGIXML_LIBRARIES}
 	${UDEV_LIBRARIES}
 	Boost::filesystem
-  ${CMAKE_DL_LIBS}
-  ${CMAKE_THREAD_LIBS_INIT}
+        ${CMAKE_DL_LIBS}
+        ${CMAKE_THREAD_LIBS_INIT}
 )
 
 ## include addons dependent on found system libs

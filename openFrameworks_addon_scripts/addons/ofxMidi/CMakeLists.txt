@@ -30,6 +30,7 @@ target_link_libraries(${ADDON_NAME}
     openframeworks
     # system libraries either by their linkname (-lfoo) 
     # or by the variable defined by find modules in parents (${FOO_LIBRARIES})
+    ${ALSA_LIBRARIES}
 )
 target_include_directories(${ADDON_NAME}
     PUBLIC
@@ -38,6 +39,7 @@ target_include_directories(${ADDON_NAME}
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/rtmidi/>
         # include directories in addon tree must be referenced like above
         # system include directories by their full path (/usr/include/foo)
+	${ALSA_INCLUDE_DIRS}
 )
 
 install(TARGETS ${ADDON_NAME}

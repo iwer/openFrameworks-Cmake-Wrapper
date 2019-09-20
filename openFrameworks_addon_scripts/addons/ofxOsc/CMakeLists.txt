@@ -18,6 +18,7 @@ SET(ADDON_SRC
 	"${ADDON_ROOT}/libs/oscpack/src/osc/OscOutboundPacketStream.cpp"
 	"${ADDON_ROOT}/libs/oscpack/src/osc/OscPrintReceivedElements.cpp"
 	"${ADDON_ROOT}/libs/oscpack/src/osc/OscReceivedElements.cpp"
+	"${ADDON_ROOT}/libs/oscpack/src/osc/OscTypes.cpp"
 	)
 
 add_library(${ADDON_NAME}
@@ -32,6 +33,8 @@ target_link_libraries(${ADDON_NAME}
 target_include_directories(${ADDON_NAME}
     PUBLIC
 	$<INSTALL_INTERFACE:include/addons/${ADDON_NAME}>
+	$<INSTALL_INTERFACE:include/addons/${ADDON_NAME}/osc/>
+	$<INSTALL_INTERFACE:include/addons/${ADDON_NAME}/ip/>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/osc/>
@@ -47,8 +50,8 @@ install(TARGETS ${ADDON_NAME}
 install(DIRECTORY
 	$<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
         $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/osc/>
-        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/ip/>
+#        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/osc/>
+#        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/oscpack/src/ip/>
     	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/addons/${ADDON_NAME}/
 	FILES_MATCHING PATTERN "*.h"
 )
