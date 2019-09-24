@@ -58,4 +58,15 @@ fi
 if [ ! -d "ofxAudioFile" ]; then
     git clone https://github.com/npisanti/ofxAudioFile.git
 fi
-
+if [ ! -d "ofxOpenVR" ]; then
+    git clone https://github.com/smallfly/ofxOpenVR.git 
+fi
+if [ ! -d "ofxHoa" ]; then
+    git clone https://github.com/CICM/ofxHoa.git
+fi
+if [ ! -d "ofxFft" ]; then
+    git clone https://github.com/kylemcdonald/ofxFft.git
+fi
+if [ ! -d "ofxSoundObjects" ]; then
+    git clone https://github.com/roymacdonald/ofxSoundObjects.git
+fi

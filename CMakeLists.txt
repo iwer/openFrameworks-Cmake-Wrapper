@@ -18,6 +18,7 @@ find_package(Boost REQUIRED COMPONENTS system filesystem)
 find_package(PugiXML REQUIRED)
 find_package(assimp)
 find_package(OpenCL)
+#find_package(Eigen REQUIRED)
 
 include(FindPkgConfig)
 pkg_search_module(Cairo REQUIRED cairo)
@@ -234,6 +235,8 @@ add_subdirectory(${openFrameworks_DIR}/addons/ofxPointInMesh)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxAudioFile)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxMidi)
 add_subdirectory(${openFrameworks_DIR}/addons/ofxPDSP)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxFft)
+add_subdirectory(${openFrameworks_DIR}/addons/ofxSoundObjects)
 
 
 if(${assimp_FOUND})
@@ -252,6 +255,9 @@ endif(${OPENCV_FOUND} AND ${HARFBUZZ_FOUND} AND ${FreeType2_FOUND})
 if(${OPENVR_FOUND})
     add_subdirectory(${openFrameworks_DIR}/addons/ofxOpenVR)
 endif(${OPENVR_FOUND})
+#if(${EIGEN_FOUND})
+    add_subdirectory(${openFrameworks_DIR}/addons/ofxHoa)
+#endif(${EIGEN_FOUND})
 
 #######################
 # Installation instructions

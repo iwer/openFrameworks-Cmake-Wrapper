@@ -33,7 +33,7 @@ do
     fi
 
     if [ -L "${TARGET}/${ADDONNAME}.cmake" ]; then
-        echo " * removing old .cmake symlink"
+        echo " - removing old .cmake symlink"
 	rm "${TARGET}/${ADDONNAME}.cmake"
     fi
 
@@ -43,11 +43,11 @@ do
     fi    
 
     if [ -f "${TARGET}/CMakeLists.txt" ]; then
-        echo " * Removing file at target"
+        echo " - Removing file at target"
         rm "${TARGET}/CMakeLists.txt"
     fi
  
-    echo " * Linking cmake script for ${ADDONNAME}"
+    echo " + Linking cmake script for ${ADDONNAME}"
     cd ${TARGET}
     ln -s ${SOURCE}
 done

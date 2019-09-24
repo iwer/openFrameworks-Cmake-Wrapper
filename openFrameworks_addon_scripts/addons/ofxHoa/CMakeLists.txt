@@ -1,0 +1,57 @@
+get_filename_component(ADDON_ROOT ${CMAKE_CURRENT_LIST_FILE} PATH)
+get_filename_component(ADDON_NAME ${ADDON_ROOT} NAME)
+
+message(STATUS "-------------------------------- Configuring OF Addon '${ADDON_NAME}'")
+
+set(ADDON_SRC 
+    # insert source files with ${ADDON_ROOT} as base (${ADDON_ROOT}/src/ofxAwesomeAddon.cpp)
+)
+set(ADDON_HDR
+   # not used, but where supposed to be only header filenames without path for installation. Now solved with cmake filters.
+)
+
+add_library(${ADDON_NAME} INTERFACE
+    ${ADDON_SRC}
+)
+add_library(OF::${ADDON_NAME} ALIAS ${ADDON_NAME})
+add_dependencies(${ADDON_NAME} openframeworks)
+
+target_link_libraries(${ADDON_NAME} 
+    INTERFACE
+    openframeworks
+    # system libraries either by their linkname (-lfoo) 
+    # or by the variable defined by find modules in parents (${FOO_LIBRARIES})
+)
+target_include_directories(${ADDON_NAME}
+    INTERFACE
+	$<INSTALL_INTERFACE:include/addons/${ADDON_NAME}>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/ofxHoaClasses/>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/HoaLibrary-Light/Sources/>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/HoaLibrary-Light/ThirdParty/Eigen/>
+        # include directories in addon tree must be referenced like above
+        # system include directories by their full path (/usr/include/foo)
+)
+
+target_compile_definitions(${ADDON_NAME}
+	INTERFACE
+	    ${EIGEN_DEFINITIONS}
+)
+
+install(TARGETS ${ADDON_NAME}
+    EXPORT ${ADDON_NAME}-targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(DIRECTORY
+	$<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/src/>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/ofxHoaClasses/>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/HoaLibrary-Light/Sources/>
+        $<BUILD_INTERFACE:${openFrameworks_DIR}/addons/${ADDON_NAME}/libs/HoaLibrary-Light/ThirdParty/Eigen/>
+    	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/addons/${ADDON_NAME}/
+	FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" REGEX "/[^.]+$"
+
+)
+
+set(OFADDON_TARGETS ${OFADDON_TARGETS} ${ADDON_NAME} PARENT_SCOPE)
